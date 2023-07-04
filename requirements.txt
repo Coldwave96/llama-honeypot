@@ -1,0 +1,10 @@
+accelerate
+loralib
+bitsandbytes
+datasets
+fire
+peft
+transformers==4.28.0
+sentencepiece
+fastapi
+uvicorn
