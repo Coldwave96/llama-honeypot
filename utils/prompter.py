@@ -8,8 +8,8 @@ class Prompter(object):
     def __init__(self, template_name: str = "", verbose: bool = False):
         self._verbose = verbose
         if not template_name:
-            # Set the alpaca template as default
-            template_name = "alapaca"
+            # Set the honeypot template as default
+            template_name = "honeypot"
         file_name = os.path.join("templates", f"{template_name}.json")
         if not os.path.exists(file_name):
             raise ValueError(f"Can't find {file_name}")
@@ -20,16 +20,17 @@ class Prompter(object):
     
     def generate_prompt(
         self,
-        instruction: str,
-        input: Union[None, str] = None,
+        command: str,
+        history: list,
         label: Union[None, str] = None
     ) -> str:
-        # returns the full prompt from instruction and optional input
+        # returns the full prompt from command and optional history
         # if a label (=response, =output) is provided, it's also appended.
-        if input:
-            res = self.template['prompt_input'].format(instruction=instruction, input=input)
+        if len(history) != 0:
+            history_str = "".join(["A:" + i[0] + "/n" + "Q:" + i[1] + "\n\n" for i in history])
+            res = self.template['prompt_history'].format(command=command, history=history_str)
         else:
-            res = self.template['prompt_no_input'].format(instruction=instruction)
+            res = self.template['prompt_no_history'].format(command=command)
         if label:
             res = f"{res}{label}"
         if self._verbose:

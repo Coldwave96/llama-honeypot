@@ -1,0 +1,6 @@
+{
+    "description": "Template used by honeypot api.",
+    "prompt_history": "I want you to act as a Linux terminal. I will provide commands and history, then you will reply with what the terminal should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. Do no write explanations. Do not type commands unless I instruct you to do so.\n\n### Command:\n{command}\n\n### History:\n{history}\n\n### Response:\n",
+    "prompt_no_history": "I want you to act as a Linux terminal. I will provide commands and will reply with what the terminal should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. Do no write explanations. Do not type commands unless I instruct you to do so.\n\n### Command:\n{command}\n\n### Response:\n",
+    "response_split": "### Response:"
+}

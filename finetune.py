@@ -21,7 +21,7 @@ def train(
     # Model/Data params
     base_model: str = "",
     data_path: str = "",
-    output_dir: str = "./lora-alpaca",
+    output_dir: str = "./lora-honeypot",
 
     # Training hyperparams
     batch_size: int = 128,
@@ -48,11 +48,11 @@ def train(
     wandb_watch: str = "",  # options: false | gradients | all
     wandb_log_model: str = "",  # options: false | true
     resume_from_checkpoint: str = None,  # either training checkpoint or final adapter
-    prompt_template_name: str = "alpaca"  # The prompt template to use, will default to alpaca.
+    prompt_template_name: str = "honeypot"  # The prompt template to use, will default to honeypot.
 ):
     if int(os.environ.get("LOCAL_RANK", 0)) == 0:
         print(
-            f"Training Alpaca-LoRA model with params:\n"
+            f"Training Honeypot-LoRA model with params:\n"
             f"base_model: {base_model}\n"
             f"data_path: {data_path}\n"
             f"output_dir: {output_dir}\n"
@@ -135,16 +135,16 @@ def train(
     
     def generate_and_tokenizer_prompt(data_point):
         full_prompt = prompter.generate_prompt(
-            data_point["instruction"],
-            data_point["input"],
+            data_point["command"],
+            data_point["history"],
             data_point["output"]
         )
         tokenized_full_prompt = tokenize(full_prompt)
 
         if not train_on_inputs:
             user_prompt = prompter.generate_prompt(
-                data_point["instruction"],
-                data_point["input"]
+                data_point["command"],
+                data_point["history"]
             )
             tokenized_user_prompt = tokenize(user_prompt, add_eos_token=add_eos_token)
             user_prompt_len = len(tokenized_user_prompt["input_ids"])
