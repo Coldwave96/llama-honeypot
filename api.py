@@ -74,7 +74,6 @@ def honeypot(
     top_k,
     num_beams,
     max_new_tokens,
-    **kwargs
 ):
     prompt = prompter.generate_prompt(command=command, history=history)
     inputs = tokenizer(prompt, return_tensors="pt")
@@ -84,7 +83,6 @@ def honeypot(
         top_p = top_p,
         top_k = top_k,
         num_beams = num_beams,
-        **kwargs
     )
 
     with torch.no_grad():
