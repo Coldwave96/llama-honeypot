@@ -94,7 +94,7 @@ def honeypot(
         )
     s = generation_output.sequences[0]
     output = tokenizer.decode(s)
-    response = prompter.get_response(output)
+    response = prompter.get_response(output).split("###")[0].strip()
     history.append([command, response])
     return response, history
 
