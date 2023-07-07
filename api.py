@@ -17,7 +17,7 @@ from utils.prompter import Prompter
 parser = argparse.ArgumentParser()
 parser.add_argument("--base_model", default=None, type=str, required=True, help="Base model path")
 parser.add_argument("--lora_weights", default="./lora-honeypot", type=str, help="LoRA weights patch")
-parser.add_argument("--gpus", default="0", type=str, help="Use cuda:0 as default. Inference using multi-cards: --gpus=0,1,...")
+parser.add_argument("--gpus", default="0", type=str, help="Use cuda:0 as default. Inference using multi-cards: '--gpus 0,1,...'")
 parser.add_argument("--max_length", default=256, type=int, help='Maximum input prompt length, counted from the end of prompt')
 parser.add_argument("--load_in_8bit", action="store_true", help="Quantify model in INT8")
 parser.add_argument("--cpu_only", action="store_true", help="Inference on CPU only")
@@ -90,7 +90,6 @@ def honeypot(
             input_ids = input_ids,
             generation_config = generation_config,
             return_dict_in_generate = True,
-            output_score = True,
             max_new_tokens = max_new_tokens
         )
     s = generation_output.sequences[0]
@@ -120,7 +119,7 @@ async def create_item(request: Request):
         top_p = top_p if top_p else 0.75,
         top_k = top_k if top_k else 40,
         num_beams = num_beams if num_beams else 4,
-        max_new_tokens = max_new_tokens if max_new_tokens else 128
+        max_new_tokens = max_new_tokens if max_new_tokens else 256
     )
     now = datetime.datetime.now()
     time = now.strftime("%Y-%m-%d %H:%M:%S")

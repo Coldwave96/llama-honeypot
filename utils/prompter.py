@@ -27,7 +27,7 @@ class Prompter(object):
         # returns the full prompt from command and optional history
         # if a label (=response, =output) is provided, it's also appended.
         if len(history) != 0:
-            history_str = "".join(["A:" + i[0] + "/n" + "Q:" + i[1] + "\n\n" for i in history])
+            history_str = "".join(["A:" + i[0] + "\n" + "Q:" + i[1] + "\n" for i in history])
             res = self.template['prompt_history'].format(command=command, history=history_str)
         else:
             res = self.template['prompt_no_history'].format(command=command)
